@@ -4,134 +4,147 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0a0a0a">
 <title>WeWe</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Caveat:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
 
-/* ── Reset & base ── */
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;overflow:hidden;background:#e8e4db}
-body{font-family:'Special Elite','Courier New',monospace;color:#1e1c18;display:flex;flex-direction:column}
+html,body{height:100%;overflow:hidden;background:#0a0a0a}
+body{font-family:'Inter',system-ui,sans-serif;color:#f0f0f0;display:flex;flex-direction:column;font-size:15px}
 
 /* ── Header ── */
-.hdr{background:#faf8f2;border-bottom:2px solid #1e1c18;padding:12px 16px 10px;display:flex;justify-content:space-between;align-items:baseline;flex-shrink:0}
-.appname{font-size:22px;letter-spacing:4px}
-.hdr-right{display:flex;align-items:baseline;gap:10px}
-.hdate{font-family:'Caveat',cursive;font-size:13px;color:#888}
-.reset-btn{font-family:'Caveat',cursive;font-size:12px;color:#ccc;cursor:pointer;padding:4px}
+.hdr{background:#0a0a0a;padding:env(safe-area-inset-top,0px) 20px 0;flex-shrink:0}
+.hdr-inner{display:flex;justify-content:space-between;align-items:center;padding:14px 0 12px;border-bottom:1px solid #222}
+.appname{font-size:18px;font-weight:600;letter-spacing:3px;color:#fff}
+.hdr-right{display:flex;align-items:center;gap:14px}
+.hdate{font-size:12px;color:#555;font-weight:400}
+.reset-btn{font-size:13px;color:#333;cursor:pointer;padding:6px;line-height:1}
 
 /* ── Tab bar ── */
-.tabs{display:flex;background:#faf8f2;border-bottom:1px solid #d8d4c8;flex-shrink:0}
-.tab{flex:1;text-align:center;padding:11px 0 9px;font-family:'Caveat',cursive;font-size:14px;color:#aaa;cursor:pointer;border-bottom:2px solid transparent;transition:color .15s}
-.tab.active{color:#1e1c18;border-bottom-color:#1e1c18}
+.tabs{display:flex;background:#0a0a0a;border-bottom:1px solid #1a1a1a;flex-shrink:0;padding:0 20px}
+.tab{flex:1;text-align:center;padding:11px 0 10px;font-size:13px;font-weight:500;color:#444;cursor:pointer;border-bottom:2px solid transparent;letter-spacing:.5px;transition:color .15s}
+.tab.active{color:#fff;border-bottom-color:#fff}
 
-/* ── Scrollable content area ── */
-.content{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;background:#e8e4db}
-.tab-pane{display:none;min-height:100%}
+/* ── Content ── */
+.content{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;background:#0a0a0a;position:relative}
+.tab-pane{display:none}
 .tab-pane.active{display:block}
 
-/* ── Body figure tab ── */
-.body-tab{display:flex;flex-direction:column;align-items:center;padding:16px 0 100px}
-.svg-wrap{position:relative;width:180px}
-.view-btns{display:flex;gap:0;margin-top:10px;border:1px solid #ccc;border-radius:3px;overflow:hidden;background:#faf8f2}
-.vbtn{flex:1;padding:10px 0;font-family:'Caveat',cursive;font-size:14px;color:#aaa;text-align:center;cursor:pointer;transition:all .15s}
-.vbtn.active{background:#1e1c18;color:#faf8f2}
+/* ── Body tab — fills screen ── */
+.body-tab{display:flex;flex-direction:column;align-items:center;padding:20px 0 0}
+.svg-container{flex:1;display:flex;justify-content:center;align-items:flex-start;width:100%;padding:0 24px}
+.svg-container svg{width:100%;max-width:340px;height:auto}
+.view-btns{display:flex;gap:0;margin:16px 20px 0;border:1px solid #222;border-radius:8px;overflow:hidden;background:#111;align-self:stretch}
+.vbtn{flex:1;padding:12px 0;font-size:13px;font-weight:500;color:#555;text-align:center;cursor:pointer;transition:all .15s;letter-spacing:.3px}
+.vbtn.active{background:#fff;color:#000}
+.today-banner{margin:12px 20px 20px;background:#111;border:1px solid #1e1e1e;border-radius:10px;padding:12px 14px}
+.today-banner-title{font-size:11px;font-weight:600;color:#444;letter-spacing:.8px;text-transform:uppercase;margin-bottom:8px}
+.today-item{display:flex;align-items:center;gap:10px;padding:5px 0}
+.today-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.today-name{font-size:13px;color:#ccc;flex:1}
+.today-status{font-size:11px;font-weight:500}
+.today-done{color:#2a9d2a}
+.today-pending{color:#e0874a}
+.today-due{color:#cf4444}
 
 /* ── List tab ── */
-.list-tab{padding:0 0 100px}
-.cond-item{display:flex;align-items:flex-start;gap:10px;padding:13px 16px;background:#faf8f2;border-bottom:1px solid #e0dccf;cursor:pointer;min-height:56px;-webkit-user-select:none;user-select:none}
-.cond-item:active{background:#f0ece0}
+.add-row{display:flex;align-items:center;gap:12px;padding:16px 20px;background:#111;border-bottom:1px solid #1a1a1a;cursor:pointer;min-height:56px}
+.add-row:active{background:#1a1a1a}
+.plus-icon{width:28px;height:28px;border:1.5px solid #333;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;color:#555;line-height:1;flex-shrink:0}
+.add-row span{font-size:14px;color:#555;font-weight:400}
+.cond-item{display:flex;align-items:flex-start;gap:12px;padding:14px 20px;background:#0a0a0a;border-bottom:1px solid #141414;cursor:pointer;min-height:60px;user-select:none;position:relative}
+.cond-item:active{background:#111}
+.cond-item.done-today{opacity:.55}
 .cinfo{flex:1;min-width:0}
-.cname{font-size:14px;line-height:1.3}
-.csub{font-family:'Caveat',cursive;font-size:12px;color:#888;margin-top:2px}
-.bar-row{display:flex;align-items:center;gap:6px;margin-top:5px}
-.btrack{flex:1;height:5px;background:#e8e4d8;border-radius:2px;overflow:hidden}
-.bfill{height:100%;border-radius:2px;transition:width .3s}
-.add-row{display:flex;align-items:center;gap:10px;padding:14px 16px;background:#faf8f2;border-bottom:1px dashed #ccc;cursor:pointer;min-height:52px}
-.add-row:active{background:#f0ece0}
-.plus-icon{width:26px;height:26px;border:1.5px solid #aaa;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;color:#aaa;line-height:1;flex-shrink:0}
-.add-row span{font-family:'Caveat',cursive;font-size:15px;color:#888}
+.cname{font-size:15px;font-weight:500;line-height:1.3;color:#f0f0f0}
+.csub{font-size:12px;color:#444;margin-top:3px;font-weight:400}
+.bar-row{display:flex;align-items:center;gap:7px;margin-top:6px}
+.btrack{flex:1;height:3px;background:#1a1a1a;border-radius:2px;overflow:hidden}
+.bfill{height:100%;border-radius:2px;transition:width .4s ease}
+.done-badge{position:absolute;right:20px;top:50%;transform:translateY(-50%);font-size:11px;font-weight:600;color:#2a9d2a;letter-spacing:.3px}
 
-/* ── Bottom sheet overlay ── */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:90;opacity:0;pointer-events:none;transition:opacity .22s}
+/* ── Bottom sheet ── */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:90;opacity:0;pointer-events:none;transition:opacity .22s}
 .overlay.show{opacity:1;pointer-events:all}
-.sheet{position:fixed;bottom:0;left:0;right:0;background:#faf8f2;border-top:1.5px solid #c8c0a8;border-radius:16px 16px 0 0;z-index:100;max-height:88vh;overflow-y:auto;-webkit-overflow-scrolling:touch;transform:translateY(100%);transition:transform .25s cubic-bezier(.4,0,.2,1)}
+.sheet{position:fixed;bottom:0;left:0;right:0;background:#111;border-top:1px solid #222;border-radius:20px 20px 0 0;z-index:100;max-height:92vh;overflow-y:auto;-webkit-overflow-scrolling:touch;transform:translateY(100%);transition:transform .28s cubic-bezier(.4,0,.2,1);padding-bottom:env(safe-area-inset-bottom,20px)}
 .sheet.show{transform:translateY(0)}
-.sheet-handle{width:36px;height:4px;background:#d0ccc0;border-radius:2px;margin:10px auto 0}
-.sheet-title{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#888;padding:12px 18px 10px;border-bottom:1px solid #e8e4d8}
-.sheet-body{padding:14px 18px 32px}
+.sheet-handle{width:36px;height:3px;background:#333;border-radius:2px;margin:12px auto 0}
+.sheet-title{font-size:11px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:#444;padding:14px 20px 12px;border-bottom:1px solid #1a1a1a}
+.sheet-body{padding:16px 20px 16px}
 
 /* ── Detail sheet ── */
-.d-region{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#888;margin-bottom:3px}
-.d-name{font-family:'Caveat',cursive;font-size:20px;line-height:1.2;margin-bottom:8px}
-.d-meta{font-family:'Caveat',cursive;font-size:13px;color:#666;line-height:2}
-.d-actions{display:flex;flex-direction:column;gap:10px;margin-top:14px}
-.dact{width:100%;padding:14px 16px;font-family:'Special Elite',monospace;font-size:13px;letter-spacing:1px;border:1px solid #aaa;background:#faf8f2;cursor:pointer;border-radius:2px;text-align:left}
-.dact:active{background:#ede9dc}
-.dact.primary{border-color:#3b6d11;color:#3b6d11;background:#f2f9ee}
-.dact.primary:active{background:#e4f2dc}
-.dact.green{border-color:#4caf6e;color:#2a6b40;background:#f2faf5}
-.dact.danger{border-color:#A32D2D;color:#A32D2D;background:#fdf2f2}
-.pfeedback{font-family:'Caveat',cursive;font-size:13px;color:#888;margin-top:10px;min-height:18px}
+.d-region{font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#444;margin-bottom:4px}
+.d-name{font-size:22px;font-weight:600;line-height:1.2;margin-bottom:10px}
+.d-meta{font-size:13px;color:#666;line-height:2;margin-bottom:4px}
+.d-meta strong{color:#aaa;font-weight:500}
+.d-actions{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+.dact{width:100%;padding:15px 18px;font-size:14px;font-weight:500;border:1px solid #222;background:#1a1a1a;cursor:pointer;border-radius:10px;text-align:left;color:#ccc;transition:background .15s}
+.dact:active{background:#222}
+.dact.primary{border-color:#2a7a2a;color:#3dba3d;background:#0f1f0f}
+.dact.secondary-action{border-color:#1a1a1a;color:#555}
+.dact.green{border-color:#1a3a2a;color:#3dba3d}
+.dact.danger{border-color:#3a1a1a;color:#cf4444}
+.dact:disabled{opacity:.3;cursor:not-allowed}
+.pfeedback{font-size:13px;color:#555;margin-top:10px;min-height:18px;font-weight:400}
 
-/* ── Tap panel (region) ── */
-.tp-entry{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid #eee;cursor:pointer;min-height:48px}
-.tp-entry:active{opacity:.7}
+/* ── Tap sheet ── */
+.tp-entry{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid #1a1a1a;cursor:pointer;min-height:52px}
 .tp-entry:last-child{border-bottom:none}
-.tp-arrow{font-family:'Caveat',cursive;font-size:14px;color:#ccc}
+.tp-entry:active{opacity:.7}
 
-/* ── Form sheet ── */
-.form-row{margin-bottom:14px}
-.flabel{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#888;margin-bottom:4px}
-.fval{font-family:'Caveat',cursive;font-size:16px;color:#1e1c18;border:none;border-bottom:1.5px solid #c8c0a8;background:transparent;width:100%;padding:4px 0;outline:none}
-select.fval{cursor:pointer;-webkit-appearance:auto}
-.freq-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:6px}
-.freq-chip{font-family:'Caveat',cursive;font-size:14px;padding:7px 14px;border:1px solid #c8c0a8;border-radius:20px;cursor:pointer;background:#faf8f2;color:#666;user-select:none;transition:all .1s;min-height:36px;display:flex;align-items:center}
-.freq-chip:active{opacity:.7}
-.freq-chip.selected{background:#1e1c18;color:#faf8f2;border-color:#1e1c18}
-.freq-interval{display:flex;align-items:center;gap:8px;margin-top:8px}
-.freq-interval input{width:56px;font-family:'Caveat',cursive;font-size:16px;color:#1e1c18;border:none;border-bottom:1.5px solid #c8c0a8;background:transparent;padding:4px 0;outline:none;text-align:center}
-.freq-interval label{font-family:'Caveat',cursive;font-size:14px;color:#888}
-.form-actions{display:flex;flex-direction:column;gap:10px;margin-top:18px}
-.fact{width:100%;padding:14px 16px;font-family:'Special Elite',monospace;font-size:13px;letter-spacing:1px;border:1px solid #aaa;background:#faf8f2;cursor:pointer;border-radius:2px;text-align:center}
-.fact:active{background:#ede9dc}
-.fact.primary{border-color:#3b6d11;color:#3b6d11;background:#f2f9ee}
-.ferr{font-family:'Caveat',cursive;font-size:13px;color:#A32D2D;margin-top:8px;min-height:18px}
+/* ── Form ── */
+.form-row{margin-bottom:18px}
+.flabel{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#444;margin-bottom:6px}
+.fval{font-size:16px;color:#f0f0f0;border:none;border-bottom:1px solid #2a2a2a;background:transparent;width:100%;padding:8px 0;outline:none;font-family:'Inter',sans-serif;font-weight:400}
+.fval::placeholder{color:#2a2a2a}
+select.fval{cursor:pointer;color:#888}
+select.fval option{background:#111;color:#f0f0f0}
+select.fval optgroup{color:#444}
+.freq-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.freq-chip{font-size:13px;font-weight:500;padding:8px 14px;border:1px solid #222;border-radius:20px;cursor:pointer;background:#0a0a0a;color:#555;user-select:none;transition:all .12s;min-height:38px;display:flex;align-items:center}
+.freq-chip.selected{background:#fff;color:#000;border-color:#fff}
+.freq-interval{display:flex;align-items:center;gap:10px;margin-top:10px}
+.freq-interval input{width:60px;font-size:16px;color:#f0f0f0;border:none;border-bottom:1px solid #2a2a2a;background:transparent;padding:6px 0;outline:none;text-align:center;font-family:'Inter',sans-serif}
+.freq-interval label{font-size:13px;color:#444}
+.form-actions{display:flex;flex-direction:column;gap:10px;margin-top:20px}
+.fact{width:100%;padding:15px 18px;font-size:14px;font-weight:600;border:1px solid #222;background:#1a1a1a;cursor:pointer;border-radius:10px;text-align:center;color:#ccc;letter-spacing:.3px}
+.fact.primary{border-color:#2a7a2a;color:#3dba3d;background:#0f1f0f}
+.ferr{font-size:13px;color:#cf4444;margin-top:8px;min-height:18px}
 
-/* ── Confirm dialog ── */
-.confirm-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;display:flex;align-items:center;justify-content:center;padding:24px}
-.confirm-box{background:#faf8f2;border:1px solid #c8c0a8;padding:22px 20px;max-width:320px;width:100%}
-.confirm-msg{font-family:'Caveat',cursive;font-size:16px;color:#1e1c18;margin-bottom:18px;line-height:1.5}
+/* ── Confirm ── */
+.confirm-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:200;display:flex;align-items:center;justify-content:center;padding:24px}
+.confirm-box{background:#111;border:1px solid #222;border-radius:16px;padding:24px 20px;max-width:340px;width:100%}
+.confirm-msg{font-size:15px;color:#ccc;margin-bottom:20px;line-height:1.5;font-weight:400}
 .confirm-btns{display:flex;gap:10px}
-.confirm-btns button{flex:1;padding:13px;font-family:'Special Elite',monospace;font-size:12px;letter-spacing:1px;border:1px solid #aaa;background:#faf8f2;cursor:pointer}
-.confirm-btns button.yes{border-color:#A32D2D;color:#A32D2D}
+.confirm-btns button{flex:1;padding:14px;font-size:14px;font-weight:600;border:1px solid #222;background:#1a1a1a;cursor:pointer;border-radius:10px;color:#666;font-family:'Inter',sans-serif}
+.confirm-btns button.yes{border-color:#3a1a1a;color:#cf4444}
 
 /* ── Save indicator ── */
-.save-ind{position:fixed;top:14px;right:16px;font-family:'Caveat',cursive;font-size:12px;color:#4caf6e;z-index:150;opacity:0;transition:opacity .3s}
+.save-ind{position:fixed;top:18px;right:20px;font-size:11px;font-weight:600;color:#2a9d2a;z-index:150;opacity:0;transition:opacity .3s;letter-spacing:.3px}
 .save-ind.show{opacity:1}
-
-/* ── Hint ── */
-.hint{font-family:'Caveat',cursive;font-size:12px;color:#aaa;padding:14px 16px;text-align:center}
 
 /* ── SVG regions ── */
 .region{cursor:pointer}
-.region:active path,.region:active ellipse,.region:active rect,.region:active circle{opacity:.75}
 
-/* ── Scrollbar styling ── */
-::-webkit-scrollbar{width:3px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:#ccc;border-radius:2px}
+/* ── Hint ── */
+.hint{font-size:12px;color:#2a2a2a;padding:12px 20px;text-align:center;font-weight:400}
+
+::-webkit-scrollbar{width:0}
 </style>
 </head>
 <body>
 
 <!-- Header -->
 <div class="hdr">
-  <div class="appname">WeWe</div>
-  <div class="hdr-right">
-    <div class="hdate" id="hdate"></div>
-    <div class="reset-btn" onclick="resetData()">↺</div>
+  <div class="hdr-inner">
+    <div class="appname">WEWE</div>
+    <div class="hdr-right">
+      <div class="hdate" id="hdate"></div>
+      <div class="reset-btn" onclick="resetData()" title="Reset">⟳</div>
+    </div>
   </div>
 </div>
 
@@ -147,86 +160,86 @@ select.fval{cursor:pointer;-webkit-appearance:auto}
   <!-- Body tab -->
   <div class="tab-pane active" id="pane-body">
     <div class="body-tab">
-      <!-- Front SVG -->
-      <div class="svg-wrap" id="svgFront">
-        <svg width="180" height="300" viewBox="0 0 148 210" xmlns="http://www.w3.org/2000/svg">
-          <g id="fKopf" class="region" onclick="tapRegion('Kopf')"><ellipse cx="74" cy="18" rx="14" ry="15" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="fNacken" class="region" onclick="tapRegion('Nacken')"><rect x="69" y="33" width="10" height="9" rx="2" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="fSchulterR" class="region" onclick="tapRegion('Rechte Schulter')"><ellipse cx="105" cy="50" rx="13" ry="10" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="fSchulterL" class="region" onclick="tapRegion('Linke Schulter')"><ellipse cx="43" cy="50" rx="13" ry="10" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="fBrust" class="region" onclick="tapRegion('Brustkorb')"><rect x="58" y="42" width="32" height="26" rx="3" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="fOberarmR" class="region" onclick="tapRegion('Rechter Oberarm')"><rect x="112" y="60" width="11" height="18" rx="3" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="fOberarmL" class="region" onclick="tapRegion('Linker Oberarm')"><rect x="25" y="60" width="11" height="18" rx="3" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="fEllbogenR" class="region" onclick="tapRegion('Rechter Ellbogen')"><circle cx="117" cy="78" r="7" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="fEllbogenL" class="region" onclick="tapRegion('Linker Ellbogen')"><circle cx="31" cy="78" r="7" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="fUnterarmR" class="region" onclick="tapRegion('Rechter Unterarm')"><rect x="111" y="85" width="12" height="22" rx="3" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="fUnterarmL" class="region" onclick="tapRegion('Linker Unterarm')"><rect x="25" y="85" width="12" height="22" rx="3" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="fHandR" class="region" onclick="tapRegion('Rechte Hand')"><ellipse cx="117" cy="114" rx="8" ry="6" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="fHandL" class="region" onclick="tapRegion('Linke Hand')"><ellipse cx="31" cy="114" rx="8" ry="6" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="fBauch" class="region" onclick="tapRegion('Bauch')"><rect x="59" y="68" width="30" height="24" rx="3" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="fHüfte" class="region" onclick="tapRegion('Hüfte')"><rect x="53" y="92" width="42" height="14" rx="3" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="fOberschenkelR" class="region" onclick="tapRegion('Rechter Oberschenkel')"><rect x="77" y="106" width="18" height="30" rx="3" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="fOberschenkelL" class="region" onclick="tapRegion('Linker Oberschenkel')"><rect x="53" y="106" width="18" height="30" rx="3" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="fKnieR" class="region" onclick="tapRegion('Rechtes Knie')"><circle cx="86" cy="141" r="7" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="fKnieL" class="region" onclick="tapRegion('Linkes Knie')"><circle cx="62" cy="141" r="7" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="fUnterschenkelR" class="region" onclick="tapRegion('Rechter Unterschenkel')"><rect x="81" y="148" width="12" height="30" rx="3" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="fUnterschenkelL" class="region" onclick="tapRegion('Linker Unterschenkel')"><rect x="55" y="148" width="12" height="30" rx="3" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="fFussR" class="region" onclick="tapRegion('Rechter Fuß')"><ellipse cx="88" cy="184" rx="10" ry="5" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="fFussL" class="region" onclick="tapRegion('Linker Fuß')"><ellipse cx="60" cy="184" rx="10" ry="5" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <line x1="74" y1="33" x2="105" y2="43" stroke="#d0cab8" stroke-width="0.7"/>
-          <line x1="74" y1="33" x2="43" y2="43" stroke="#d0cab8" stroke-width="0.7"/>
-          <line x1="105" y1="60" x2="117" y2="71" stroke="#d0cab8" stroke-width="0.7"/>
-          <line x1="43" y1="60" x2="31" y2="71" stroke="#d0cab8" stroke-width="0.7"/>
-          <line x1="74" y1="106" x2="86" y2="134" stroke="#d0cab8" stroke-width="0.7"/>
-          <line x1="74" y1="106" x2="62" y2="134" stroke="#d0cab8" stroke-width="0.7"/>
-          <line x1="86" y1="148" x2="87" y2="179" stroke="#d0cab8" stroke-width="0.7"/>
-          <line x1="62" y1="148" x2="61" y2="179" stroke="#d0cab8" stroke-width="0.7"/>
+      <div class="svg-container" id="svgFront">
+        <svg viewBox="0 0 148 200" xmlns="http://www.w3.org/2000/svg">
+          <g id="fKopf" class="region" onclick="tapRegion('Kopf')"><ellipse cx="74" cy="16" rx="13" ry="14" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="fNacken" class="region" onclick="tapRegion('Nacken')"><rect x="69" y="30" width="10" height="8" rx="2" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="fSchulterR" class="region" onclick="tapRegion('Rechte Schulter')"><ellipse cx="100" cy="46" rx="12" ry="9" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="fSchulterL" class="region" onclick="tapRegion('Linke Schulter')"><ellipse cx="48" cy="46" rx="12" ry="9" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="fBrust" class="region" onclick="tapRegion('Brustkorb')"><rect x="59" y="38" width="30" height="24" rx="3" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="fOberarmR" class="region" onclick="tapRegion('Rechter Oberarm')"><rect x="104" y="53" width="10" height="19" rx="3" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="fOberarmL" class="region" onclick="tapRegion('Linker Oberarm')"><rect x="34" y="53" width="10" height="19" rx="3" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="fEllbogenR" class="region" onclick="tapRegion('Rechter Ellbogen')"><circle cx="109" cy="72" r="6" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="fEllbogenL" class="region" onclick="tapRegion('Linker Ellbogen')"><circle cx="39" cy="72" r="6" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="fUnterarmR" class="region" onclick="tapRegion('Rechter Unterarm')"><rect x="103" y="78" width="11" height="20" rx="3" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="fUnterarmL" class="region" onclick="tapRegion('Linker Unterarm')"><rect x="34" y="78" width="11" height="20" rx="3" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="fHandR" class="region" onclick="tapRegion('Rechte Hand')"><ellipse cx="109" cy="105" rx="8" ry="6" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="fHandL" class="region" onclick="tapRegion('Linke Hand')"><ellipse cx="39" cy="105" rx="8" ry="6" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="fBauch" class="region" onclick="tapRegion('Bauch')"><rect x="59" y="62" width="30" height="22" rx="3" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="fHuefte" class="region" onclick="tapRegion('Hüfte')"><rect x="54" y="84" width="40" height="13" rx="3" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="fOberschenkelR" class="region" onclick="tapRegion('Rechter Oberschenkel')"><rect x="77" y="97" width="17" height="28" rx="3" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="fOberschenkelL" class="region" onclick="tapRegion('Linker Oberschenkel')"><rect x="54" y="97" width="17" height="28" rx="3" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="fKnieR" class="region" onclick="tapRegion('Rechtes Knie')"><circle cx="85" cy="130" r="6" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="fKnieL" class="region" onclick="tapRegion('Linkes Knie')"><circle cx="63" cy="130" r="6" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="fUnterschenkelR" class="region" onclick="tapRegion('Rechter Unterschenkel')"><rect x="79" y="136" width="12" height="28" rx="3" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="fUnterschenkelL" class="region" onclick="tapRegion('Linker Unterschenkel')"><rect x="57" y="136" width="12" height="28" rx="3" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="fFussR" class="region" onclick="tapRegion('Rechter Fuß')"><ellipse cx="86" cy="170" rx="10" ry="5" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="fFussL" class="region" onclick="tapRegion('Linker Fuß')"><ellipse cx="62" cy="170" rx="10" ry="5" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <line x1="74" y1="30" x2="100" y2="39" stroke="#222" stroke-width="1"/>
+          <line x1="74" y1="30" x2="48" y2="39" stroke="#222" stroke-width="1"/>
+          <line x1="100" y1="55" x2="109" y2="66" stroke="#222" stroke-width="1"/>
+          <line x1="48" y1="55" x2="39" y2="66" stroke="#222" stroke-width="1"/>
+          <line x1="74" y1="97" x2="85" y2="124" stroke="#222" stroke-width="1"/>
+          <line x1="74" y1="97" x2="63" y2="124" stroke="#222" stroke-width="1"/>
+          <line x1="85" y1="136" x2="85" y2="165" stroke="#222" stroke-width="1"/>
+          <line x1="63" y1="136" x2="63" y2="165" stroke="#222" stroke-width="1"/>
         </svg>
       </div>
 
-      <!-- Back SVG -->
-      <div class="svg-wrap" id="svgBack" style="display:none">
-        <svg width="180" height="300" viewBox="0 0 148 210" xmlns="http://www.w3.org/2000/svg">
-          <g id="bHinterkopf" class="region" onclick="tapRegion('Hinterkopf')"><ellipse cx="74" cy="18" rx="14" ry="15" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="bNacken" class="region" onclick="tapRegion('Nacken')"><rect x="69" y="33" width="10" height="9" rx="2" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="bSchulterL" class="region" onclick="tapRegion('Linke Schulter (hinten)')"><ellipse cx="105" cy="50" rx="13" ry="10" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="bSchulterR" class="region" onclick="tapRegion('Rechte Schulter (hinten)')"><ellipse cx="43" cy="50" rx="13" ry="10" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="bObererRuecken" class="region" onclick="tapRegion('Oberer Rücken')"><rect x="58" y="42" width="32" height="14" rx="3" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="bUntererRuecken" class="region" onclick="tapRegion('Unterer Rücken')"><rect x="58" y="56" width="32" height="18" rx="3" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="bOberarmR" class="region" onclick="tapRegion('Rechter Oberarm (hinten)')"><rect x="112" y="60" width="11" height="18" rx="3" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="bOberarmL" class="region" onclick="tapRegion('Linker Oberarm (hinten)')"><rect x="25" y="60" width="11" height="18" rx="3" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="bEllbogenR" class="region" onclick="tapRegion('Rechter Ellbogen (hinten)')"><circle cx="117" cy="78" r="7" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="bEllbogenL" class="region" onclick="tapRegion('Linker Ellbogen (hinten)')"><circle cx="31" cy="78" r="7" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="bUnterarmR" class="region" onclick="tapRegion('Rechter Unterarm (hinten)')"><rect x="111" y="85" width="12" height="22" rx="3" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="bUnterarmL" class="region" onclick="tapRegion('Linker Unterarm (hinten)')"><rect x="25" y="85" width="12" height="22" rx="3" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="bHandR" class="region" onclick="tapRegion('Rechte Hand (hinten)')"><ellipse cx="117" cy="114" rx="8" ry="6" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="bHandL" class="region" onclick="tapRegion('Linke Hand (hinten)')"><ellipse cx="31" cy="114" rx="8" ry="6" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="bGesaess" class="region" onclick="tapRegion('Gesäss')"><rect x="53" y="74" width="42" height="18" rx="3" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="bWadeR" class="region" onclick="tapRegion('Rechte Wade')"><rect x="77" y="92" width="18" height="30" rx="3" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="bWadeL" class="region" onclick="tapRegion('Linke Wade')"><rect x="53" y="92" width="18" height="30" rx="3" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="bKniekehleR" class="region" onclick="tapRegion('Rechte Kniekehle')"><circle cx="86" cy="127" r="7" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="bKniekehleL" class="region" onclick="tapRegion('Linke Kniekehle')"><circle cx="62" cy="127" r="7" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="bAchillesR" class="region" onclick="tapRegion('Rechte Achillessehne')"><rect x="81" y="134" width="12" height="30" rx="3" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="bAchillesL" class="region" onclick="tapRegion('Linke Achillessehne')"><rect x="55" y="134" width="12" height="30" rx="3" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="bFerseR" class="region" onclick="tapRegion('Rechte Ferse')"><ellipse cx="88" cy="170" rx="10" ry="5" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <g id="bFerseL" class="region" onclick="tapRegion('Linke Ferse')"><ellipse cx="60" cy="170" rx="10" ry="5" fill="#f0f0ec" stroke="#b0aa9a" stroke-width="0.8"/></g>
-          <line x1="74" y1="33" x2="105" y2="43" stroke="#d0cab8" stroke-width="0.7"/>
-          <line x1="74" y1="33" x2="43" y2="43" stroke="#d0cab8" stroke-width="0.7"/>
-          <line x1="105" y1="60" x2="117" y2="71" stroke="#d0cab8" stroke-width="0.7"/>
-          <line x1="43" y1="60" x2="31" y2="71" stroke="#d0cab8" stroke-width="0.7"/>
-          <line x1="74" y1="92" x2="86" y2="120" stroke="#d0cab8" stroke-width="0.7"/>
-          <line x1="74" y1="92" x2="62" y2="120" stroke="#d0cab8" stroke-width="0.7"/>
-          <line x1="86" y1="134" x2="87" y2="165" stroke="#d0cab8" stroke-width="0.7"/>
-          <line x1="62" y1="134" x2="61" y2="165" stroke="#d0cab8" stroke-width="0.7"/>
+      <div class="svg-container" id="svgBack" style="display:none">
+        <svg viewBox="0 0 148 200" xmlns="http://www.w3.org/2000/svg">
+          <g id="bHinterkopf" class="region" onclick="tapRegion('Hinterkopf')"><ellipse cx="74" cy="16" rx="13" ry="14" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="bNacken" class="region" onclick="tapRegion('Nacken')"><rect x="69" y="30" width="10" height="8" rx="2" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="bSchulterL" class="region" onclick="tapRegion('Linke Schulter (hinten)')"><ellipse cx="100" cy="46" rx="12" ry="9" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="bSchulterR" class="region" onclick="tapRegion('Rechte Schulter (hinten)')"><ellipse cx="48" cy="46" rx="12" ry="9" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="bObererRuecken" class="region" onclick="tapRegion('Oberer Rücken')"><rect x="59" y="38" width="30" height="14" rx="3" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="bUntererRuecken" class="region" onclick="tapRegion('Unterer Rücken')"><rect x="59" y="52" width="30" height="18" rx="3" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="bOberarmR" class="region" onclick="tapRegion('Rechter Oberarm (hinten)')"><rect x="104" y="53" width="10" height="19" rx="3" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="bOberarmL" class="region" onclick="tapRegion('Linker Oberarm (hinten)')"><rect x="34" y="53" width="10" height="19" rx="3" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="bEllbogenR" class="region" onclick="tapRegion('Rechter Ellbogen (hinten)')"><circle cx="109" cy="72" r="6" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="bEllbogenL" class="region" onclick="tapRegion('Linker Ellbogen (hinten)')"><circle cx="39" cy="72" r="6" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="bUnterarmR" class="region" onclick="tapRegion('Rechter Unterarm (hinten)')"><rect x="103" y="78" width="11" height="20" rx="3" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="bUnterarmL" class="region" onclick="tapRegion('Linker Unterarm (hinten)')"><rect x="34" y="78" width="11" height="20" rx="3" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="bHandR" class="region" onclick="tapRegion('Rechte Hand (hinten)')"><ellipse cx="109" cy="105" rx="8" ry="6" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="bHandL" class="region" onclick="tapRegion('Linke Hand (hinten)')"><ellipse cx="39" cy="105" rx="8" ry="6" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="bGesaess" class="region" onclick="tapRegion('Gesäss')"><rect x="54" y="70" width="40" height="27" rx="3" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="bWadeR" class="region" onclick="tapRegion('Rechte Wade')"><rect x="77" y="97" width="17" height="28" rx="3" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="bWadeL" class="region" onclick="tapRegion('Linke Wade')"><rect x="54" y="97" width="17" height="28" rx="3" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="bKniekehleR" class="region" onclick="tapRegion('Rechte Kniekehle')"><circle cx="85" cy="130" r="6" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="bKniekehleL" class="region" onclick="tapRegion('Linke Kniekehle')"><circle cx="63" cy="130" r="6" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="bAchillesR" class="region" onclick="tapRegion('Rechte Achillessehne')"><rect x="79" y="136" width="12" height="28" rx="3" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="bAchillesL" class="region" onclick="tapRegion('Linke Achillessehne')"><rect x="57" y="136" width="12" height="28" rx="3" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="bFerseR" class="region" onclick="tapRegion('Rechte Ferse')"><ellipse cx="86" cy="170" rx="10" ry="5" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <g id="bFerseL" class="region" onclick="tapRegion('Linke Ferse')"><ellipse cx="62" cy="170" rx="10" ry="5" fill="#1a1a1a" stroke="#333" stroke-width="1"/></g>
+          <line x1="74" y1="30" x2="100" y2="39" stroke="#222" stroke-width="1"/>
+          <line x1="74" y1="30" x2="48" y2="39" stroke="#222" stroke-width="1"/>
+          <line x1="100" y1="55" x2="109" y2="66" stroke="#222" stroke-width="1"/>
+          <line x1="48" y1="55" x2="39" y2="66" stroke="#222" stroke-width="1"/>
+          <line x1="74" y1="97" x2="85" y2="124" stroke="#222" stroke-width="1"/>
+          <line x1="74" y1="97" x2="63" y2="124" stroke="#222" stroke-width="1"/>
+          <line x1="85" y1="136" x2="85" y2="165" stroke="#222" stroke-width="1"/>
+          <line x1="63" y1="136" x2="63" y2="165" stroke="#222" stroke-width="1"/>
         </svg>
       </div>
 
-      <!-- View toggle -->
+      <!-- Vorne/Hinten toggle -->
       <div class="view-btns">
         <div class="vbtn active" id="btn-front" onclick="setView('front')">Vorne</div>
         <div class="vbtn" id="btn-back" onclick="setView('back')">Hinten</div>
       </div>
-      <div class="hint" id="bodyHint">Region antippen</div>
+
+      <!-- Today's status panel -->
+      <div class="today-banner" id="todayBanner"></div>
     </div>
   </div>
 
@@ -234,13 +247,13 @@ select.fval{cursor:pointer;-webkit-appearance:auto}
   <div class="tab-pane" id="pane-list">
     <div class="add-row" onclick="showAdd()">
       <div class="plus-icon">+</div>
-      <span>Neue Diagnose eintragen</span>
+      <span>Neue Diagnose</span>
     </div>
     <div id="condList"></div>
-    <div class="hint" id="listHint" style="display:none">Noch keine Diagnosen.</div>
+    <div class="hint" id="listHint" style="display:none">Keine Diagnosen eingetragen.</div>
   </div>
 
-</div><!-- end .content -->
+</div>
 
 <!-- Overlay -->
 <div class="overlay" id="overlay" onclick="closeAll()"></div>
@@ -264,9 +277,9 @@ select.fval{cursor:pointer;-webkit-appearance:auto}
   <div class="sheet-title" id="tsTitle">Region</div>
   <div class="sheet-body">
     <div id="tsBody"></div>
-    <div style="margin-top:14px">
+    <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px">
       <button class="dact primary" onclick="showAdd()">+ Diagnose hier eintragen</button>
-      <button class="dact" style="margin-top:10px" onclick="closeAll()">Schliessen</button>
+      <button class="dact secondary-action" onclick="closeAll()">Schliessen</button>
     </div>
   </div>
 </div>
@@ -308,42 +321,37 @@ select.fval{cursor:pointer;-webkit-appearance:auto}
       </select>
     </div>
     <div class="form-row">
-      <div class="flabel">Diagnose / Name</div>
+      <div class="flabel">Name / Diagnose</div>
       <input class="fval" id="fName" type="text" placeholder="z.B. Schulterzerrung" autocomplete="off">
     </div>
     <div class="form-row">
       <div class="flabel">Status</div>
       <select class="fval" id="fStatus" onchange="onStatusChange()">
-        <option value="red">Akut (rot)</option>
-        <option value="amber">Behandelt (gelb)</option>
-        <option value="blue">Chronisch – aktiv (blau)</option>
-        <option value="blue_inactive">Chronisch – inaktiv (hellblau)</option>
-        <option value="probhealed">Wahrscheinlich geheilt (grün)</option>
-        <option value="undiag">Undiagnostiziert (grau)</option>
+        <option value="red">Akut</option>
+        <option value="amber">Behandelt</option>
+        <option value="blue">Chronisch – aktiv</option>
+        <option value="blue_inactive">Chronisch – inaktiv</option>
+        <option value="probhealed">Wahrscheinlich geheilt</option>
+        <option value="undiag">Undiagnostiziert</option>
       </select>
     </div>
     <div class="form-row" id="fActionRow">
-      <div class="flabel">Aktion / Übung</div>
+      <div class="flabel">Übung / Aktion</div>
       <input class="fval" id="fAction" type="text" placeholder="z.B. Pendulum-Übung" autocomplete="off">
     </div>
     <div class="form-row" id="fDaysRow">
       <div class="flabel">Heilungsdauer (Tage)</div>
-      <input class="fval" id="fDays" type="number" min="1" max="365" value="30" style="width:100px">
+      <input class="fval" id="fDays" type="number" min="1" max="999" value="30" style="width:100px">
     </div>
     <div class="form-row" id="fFreqRow">
-      <div class="flabel">Frequenz</div>
-      <div class="freq-chips">
-        <div class="freq-chip selected" data-val="morgens" onclick="toggleChip(this)">morgens</div>
-        <div class="freq-chip" data-val="mittags" onclick="toggleChip(this)">mittags</div>
-        <div class="freq-chip" data-val="abends" onclick="toggleChip(this)">abends</div>
-        <div class="freq-chip" data-val="nachts" onclick="toggleChip(this)">nachts</div>
-        <div class="freq-chip" data-val="egal" onclick="toggleChip(this)">egal wann</div>
-        <div class="freq-chip" data-val="bedarf" onclick="toggleChip(this)">nach Bedarf</div>
+      <div class="flabel">Behandlungen pro Tag</div>
+      <div style="display:flex;align-items:center;gap:12px;margin-top:6px">
+        <input class="fval" id="fTimesPerDay" type="number" min="1" max="8" value="1" style="width:70px">
+        <span style="font-size:13px;color:#444">× pro Tag</span>
       </div>
-      <div class="freq-interval">
-        <label>alle</label>
-        <input type="number" id="fInterval" min="1" max="30" value="1">
-        <label>Tag(e)</label>
+      <div style="display:flex;align-items:center;gap:12px;margin-top:14px">
+        <input class="fval" id="fInterval" type="number" min="1" max="30" value="1" style="width:70px">
+        <span style="font-size:13px;color:#444">Tage Abstand zwischen Behandlungstagen</span>
       </div>
     </div>
     <div class="form-actions">
@@ -369,13 +377,71 @@ select.fval{cursor:pointer;-webkit-appearance:auto}
 </div>
 
 <script>
+// ── Helpers ──────────────────────────────────────────────────────
+function todayStr(){var d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();}
+
+// ── Frequency helpers (hours-based) ──────────────────────────────
+// c.timesPerDay = how many times per day (1-8)
+// c.interval    = days between treatment days (1 = every day)
+// c.logsToday   = { 'YYYY-M-D': [timestamp_ms, ...] }
+// Min wait between logs = (24/n)h * 0.75  (25% tolerance)
+
+function minHoursBetween(c){
+  var n=c.timesPerDay||1;
+  var win=24/n;
+  return win*0.75;
+}
+function logsTodayArr(c){
+  if(!c.logsToday)return[];
+  return c.logsToday[todayStr()]||[];
+}
+function logsTodayCount(c){return logsTodayArr(c).length;}
+function allSlotsDoneToday(c){return logsTodayCount(c)>=(c.timesPerDay||1);}
+function isDoneToday(c){return allSlotsDoneToday(c);}
+function canLogNow(c){
+  if(!needsTreatment[c.status])return false;
+  if(!isDueToday(c))return false;
+  var logs=logsTodayArr(c);
+  var needed=c.timesPerDay||1;
+  if(logs.length>=needed)return false;
+  if(logs.length===0)return true;
+  var hoursSince=(Date.now()-logs[logs.length-1])/3600000;
+  return hoursSince>=minHoursBetween(c);
+}
+function hoursUntilNext(c){
+  var logs=logsTodayArr(c);
+  if(logs.length===0)return 0;
+  var hoursSince=(Date.now()-logs[logs.length-1])/3600000;
+  return Math.max(0,minHoursBetween(c)-hoursSince);
+}
+function isDueToday(c){
+  if(!needsTreatment[c.status])return false;
+  var interval=c.interval||1;
+  if(interval<=1)return true;
+  if(!c.lastStreakDay)return true;
+  var last=new Date(c.lastStreakDay),today=new Date();today.setHours(0,0,0,0);
+  return Math.round((today-last)/86400000)>=interval;
+}
+function cleanLogs(c){
+  if(!c.logsToday)c.logsToday={};
+  var today=todayStr();
+  Object.keys(c.logsToday).forEach(function(k){if(k!==today)delete c.logsToday[k];});
+}
+function freqLabel(c){
+  var n=c.timesPerDay||1;
+  var iv=c.interval||1;
+  var s=n+'× täglich';
+  if(iv>1)s+=' · alle '+iv+' Tage';
+  return s;
+}
+
 // ── Storage ──────────────────────────────────────────────────────
-var STORAGE_KEY='wewe_conditions';
+var STORAGE_KEY='wewe_v14';
 var DEMO=[
-  {name:'Schulterimpingement',region:'Rechte Schulter',action:'Pendulum-Übung',times:['morgens','abends'],interval:1,day:23,total:60,status:'red',streak:3},
-  {name:'Meniskus-Reizung',region:'Linkes Knie',action:'Kräftigungsübung',times:['egal'],interval:2,day:14,total:45,status:'amber',streak:5},
-  {name:'Chron. Hüftschwäche',region:'Hüfte',action:'Mobilisierungsübung',times:['morgens'],interval:1,day:0,total:0,status:'blue',streak:0},
-  {name:'Alte Knieverletzung',region:'Rechtes Knie',action:'',times:[],interval:1,day:0,total:0,status:'blue_inactive',streak:0}
+  {name:'Schulterimpingement',region:'Rechte Schulter',action:'Pendulum-Übung',timesPerDay:2,interval:1,day:23,total:60,status:'red',streak:3,logsToday:{},lastStreakDay:''},
+  {name:'Meniskus-Reizung',region:'Linkes Knie',action:'Kräftigungsübung',timesPerDay:1,interval:2,day:14,total:45,status:'amber',streak:5,logsToday:{},lastStreakDay:''},
+  {name:'Chron. Hüftschwäche',region:'Hüfte',action:'Mobilisierungsübung',timesPerDay:1,interval:1,day:0,total:0,status:'blue',streak:0,logsToday:{},lastStreakDay:''},
+  {name:'Alte Knieverletzung',region:'Rechtes Knie',action:'',timesPerDay:1,interval:1,day:0,total:0,status:'blue_inactive',streak:0,logsToday:{},lastStreakDay:''}
 ];
 function loadConditions(){try{var r=localStorage.getItem(STORAGE_KEY);if(r)return JSON.parse(r);}catch(e){}return JSON.parse(JSON.stringify(DEMO));}
 function saveConditions(){
@@ -383,27 +449,36 @@ function saveConditions(){
   var ind=document.getElementById('saveInd');
   ind.classList.add('show');clearTimeout(ind._t);ind._t=setTimeout(function(){ind.classList.remove('show');},1400);
 }
-function resetData(){showConfirm('Alle Diagnosen wirklich löschen?','Löschen',function(){localStorage.removeItem(STORAGE_KEY);conditions=JSON.parse(JSON.stringify(DEMO));closeAll();renderList();updateBodyColors();});}
-
-function todayStr(){var d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();}
+function resetData(){
+  showConfirm('Alle Diagnosen wirklich löschen?','Löschen',function(){
+    localStorage.removeItem(STORAGE_KEY);
+    conditions=JSON.parse(JSON.stringify(DEMO));
+    closeAll();renderList();updateBodyColors();renderTodayBanner();
+  });
+}
 
 var conditions=loadConditions();
-// Auto-decay streak if missed >1 day
+
+// Migrate old format (lastActed → logsToday) and clean logs on load
 conditions.forEach(function(c){
-  if(c.streak&&c.lastLogged&&c.lastLogged!==todayStr()){
-    var last=new Date(c.lastLogged),today=new Date();today.setHours(0,0,0,0);
-    if(Math.round((today-last)/86400000)>1)c.streak=0;
+  if(!c.logsToday) c.logsToday={};
+  cleanLogs(c);
+  // Streak decay: if last streak day was >1 day ago and all slots weren't completed yesterday
+  if(c.streak && c.lastStreakDay){
+    var last=new Date(c.lastStreakDay),today=new Date();today.setHours(0,0,0,0);
+    var diff=Math.round((today-last)/86400000);
+    if(diff>1) c.streak=0; // missed a day
   }
 });
 
-// ── Status data ──────────────────────────────────────────────────
+// ── Status config ────────────────────────────────────────────────
 var statusColors={
-  red:          {dot:'#E24B4A',name:'#A32D2D',bar:'#E24B4A'},
-  amber:        {dot:'#BA7517',name:'#633806',bar:'#BA7517'},
-  blue:         {dot:'#378ADD',name:'#185FA5',bar:'#378ADD'},
-  blue_inactive:{dot:'#a8ccec',name:'#6699bb',bar:'#a8ccec'},
-  probhealed:   {dot:'#4caf6e',name:'#2a6b40',bar:'#4caf6e'},
-  undiag:       {dot:'#999',   name:'#555',   bar:'#999'}
+  red:          {dot:'#cf4444',name:'#cf4444',bar:'#cf4444'},
+  amber:        {dot:'#e0874a',name:'#e0874a',bar:'#e0874a'},
+  blue:         {dot:'#4a8fe0',name:'#4a8fe0',bar:'#4a8fe0'},
+  blue_inactive:{dot:'#2a4a6a',name:'#3a6a9a',bar:'#2a4a6a'},
+  probhealed:   {dot:'#2a9d2a',name:'#2a9d2a',bar:'#2a9d2a'},
+  undiag:       {dot:'#444',   name:'#555',   bar:'#333'}
 };
 var statusLabels={
   red:'Akut',amber:'Behandelt',blue:'Chronisch (aktiv)',
@@ -411,30 +486,33 @@ var statusLabels={
 };
 var needsTreatment={red:true,amber:true,blue:true};
 var statusFills={
-  red:          {fill:'#f4a0a0',stroke:'#C93333',sw:'1.5'},
-  amber:        {fill:'#f5c97a',stroke:'#9A5E0A',sw:'1.5'},
-  blue:         {fill:'#7ab8f0',stroke:'#1a5fa8',sw:'1.5'},
-  blue_inactive:{fill:'#cce0f5',stroke:'#7aadd4',sw:'0.8'},
-  probhealed:   {fill:'#7dd4a0',stroke:'#2a7a48',sw:'1.5'},
-  undiag:       {fill:'#bbb',   stroke:'#888',   sw:'1'},
-  none:         {fill:'#f0f0ec',stroke:'#b0aa9a',sw:'0.8'}
+  red:          {fill:'#3d1414',stroke:'#cf4444',sw:'1.5'},
+  amber:        {fill:'#3d2a0a',stroke:'#e0874a',sw:'1.5'},
+  blue:         {fill:'#0a2040',stroke:'#4a8fe0',sw:'1.5'},
+  blue_inactive:{fill:'#111824',stroke:'#2a4a6a',sw:'1'},
+  probhealed:   {fill:'#0a2a0a',stroke:'#2a9d2a',sw:'1.5'},
+  undiag:       {fill:'#1e1e1e',stroke:'#555',   sw:'1'},
+  none:         {fill:'#1a1a1a',stroke:'#333',   sw:'1'}
 };
 var statusPriority={red:5,amber:4,blue:3,undiag:2,blue_inactive:1,probhealed:1};
+
+// ── Date header ──────────────────────────────────────────────────
+document.getElementById('hdate').textContent=new Date().toLocaleDateString('de-AT',{day:'2-digit',month:'2-digit',year:'numeric'});
 
 // ── Tab switching ────────────────────────────────────────────────
 var currentTab='body';
 function switchTab(t){
   currentTab=t;
-  document.getElementById('tab-body').className='tab'+(t==='body'?' active':'');
-  document.getElementById('tab-list').className='tab'+(t==='list'?' active':'');
-  document.getElementById('pane-body').className='tab-pane'+(t==='body'?' active':'');
-  document.getElementById('pane-list').className='tab-pane'+(t==='list'?' active':'');
+  ['body','list'].forEach(function(x){
+    document.getElementById('tab-'+x).className='tab'+(t===x?' active':'');
+    document.getElementById('pane-'+x).className='tab-pane'+(t===x?' active':'');
+  });
 }
 
-// ── View (front/back) ────────────────────────────────────────────
+// ── View toggle ──────────────────────────────────────────────────
 function setView(v){
-  document.getElementById('svgFront').style.display=v==='front'?'block':'none';
-  document.getElementById('svgBack').style.display=v==='back'?'block':'none';
+  document.getElementById('svgFront').style.display=v==='front'?'flex':'none';
+  document.getElementById('svgBack').style.display=v==='back'?'flex':'none';
   document.getElementById('btn-front').className='vbtn'+(v==='front'?' active':'');
   document.getElementById('btn-back').className='vbtn'+(v==='back'?' active':'');
   closeAll();
@@ -443,7 +521,7 @@ function setView(v){
 // ── Sheet management ─────────────────────────────────────────────
 var activeSheet=null;
 function openSheet(id){
-  if(activeSheet)document.getElementById(activeSheet).classList.remove('show');
+  if(activeSheet&&activeSheet!==id)document.getElementById(activeSheet).classList.remove('show');
   activeSheet=id;
   document.getElementById('overlay').classList.add('show');
   document.getElementById(id).classList.add('show');
@@ -466,14 +544,88 @@ function showConfirm(msg,yesLabel,cb){
 function confirmYes(){document.getElementById('confirmOverlay').style.display='none';if(_confirmCb)_confirmCb();_confirmCb=null;}
 function confirmNo(){document.getElementById('confirmOverlay').style.display='none';_confirmCb=null;}
 
-// ── Date ─────────────────────────────────────────────────────────
-document.getElementById('hdate').textContent=new Date().toLocaleDateString('de-AT',{day:'2-digit',month:'2-digit',year:'numeric'});
+// ── Today banner ─────────────────────────────────────────────────
+function renderTodayBanner(){
+  var banner=document.getElementById('todayBanner');
+  var active=conditions.filter(function(c){return needsTreatment[c.status]&&isDueToday(c);});
+  if(active.length===0){
+    banner.innerHTML='<div class="today-banner-title">Heute</div><div style="font-size:12px;color:#2a9d2a;padding:4px 0">✓ Nichts fällig.</div>';
+    return;
+  }
+  var html='<div class="today-banner-title">Heute</div>';
+  active.forEach(function(c){
+    var done=allSlotsDoneToday(c);
+    var count=logsTodayCount(c);
+    var needed=c.timesPerDay||1;
+    var col=statusColors[c.status];
+    var waitH=hoursUntilNext(c);
+    var statusTxt, statusCls;
+    if(done){statusTxt='✓ fertig';statusCls='today-done';}
+    else if(canLogNow(c)){statusTxt=count+'/'+needed+' fällig';statusCls='today-due';}
+    else if(count>0){statusTxt=count+'/'+needed+' · '+Math.ceil(waitH)+'h warten';statusCls='today-pending';}
+    else{statusTxt='0/'+needed;statusCls='today-due';}
+    html+='<div class="today-item"><div class="today-dot" style="background:'+col.dot+'"></div>'
+      +'<div class="today-name">'+c.name+'</div>'
+      +'<div class="today-status '+statusCls+'">'+statusTxt+'</div></div>';
+  });
+  banner.innerHTML=html;
+}
+
+// ── Log action ────────────────────────────────────────────────────
+function logToday(){
+  if(currentDetailIdx<0)return;
+  var c=conditions[currentDetailIdx];
+  if(!canLogNow(c)){
+    var waitH=hoursUntilNext(c);
+    var allDone=allSlotsDoneToday(c);
+    document.getElementById('dsFeedback').textContent=allDone?'Heute bereits alle Einheiten erledigt.':'Bitte noch '+Math.ceil(waitH)+'h warten.';
+    document.getElementById('dsFeedback').style.color='#555';
+    return;
+  }
+  var today=todayStr();
+  if(!c.logsToday)c.logsToday={};
+  if(!c.logsToday[today])c.logsToday[today]=[];
+  c.logsToday[today].push(Date.now());
+
+  var count=logsTodayCount(c);
+  var needed=c.timesPerDay||1;
+
+  // Advance day on first log of day
+  if(count===1){
+    c.day=Math.min(c.day+1,c.total||9999);
+    if(c.status==='red'||c.status==='blue')c.status='amber';
+  }
+  // Streak when all done
+  if(allSlotsDoneToday(c)){
+    c.streak=Math.min((c.streak||0)+1,10);
+    c.lastStreakDay=today;
+  }
+
+  saveConditions();renderList();
+  var remaining=needed-count;
+  var msg='Erledigt ✓ ('+count+'/'+needed+')';
+  if(remaining>0){
+    var waitH=hoursUntilNext(c);
+    msg+=' · nächste in ~'+Math.ceil(waitH)+'h';
+  } else {
+    msg+=' · Heute komplett! Streak: '+c.streak+' ★';
+  }
+  document.getElementById('dsFeedback').textContent=msg;
+  document.getElementById('dsFeedback').style.color=remaining===0?'#2a9d2a':'#e0874a';
+  refreshDetailMeta(c);
+
+  var btn=document.getElementById('erledigt-btn');
+  if(btn){
+    if(allSlotsDoneToday(c)){btn.disabled=true;btn.textContent='✓ Heute fertig';}
+    else if(!canLogNow(c)){btn.disabled=true;btn.textContent='Warten ('+Math.ceil(hoursUntilNext(c))+'h)';}
+  }
+}
 
 // ── Helpers ──────────────────────────────────────────────────────
-function freqLabel(times,interval){if(!times||!times.length)return'–';var t=times.join(' + ');if(interval>1)t+=', alle '+interval+' Tage';return t;}
+function freqLabel(times,interval){if(!times||!times.length)return'–';var t=times.join(', ');if(interval>1)t+=' · alle '+interval+' Tage';return t;}
 function toggleChip(el){el.classList.toggle('selected');}
 function getSelectedTimes(){var v=[];document.querySelectorAll('#addSheet .freq-chip.selected').forEach(function(c){v.push(c.dataset.val);});return v.length?v:['egal'];}
-function stars(n){var s='';for(var i=0;i<Math.min(n,10);i++)s+='★';return s;}
+function starsHtml(n,color){var s='';for(var i=0;i<Math.min(n,10);i++)s+='★';return n>0?'<span style="color:'+color+';font-size:11px;margin-left:5px">'+s+'</span>':'';}
 
 // ── Render list ──────────────────────────────────────────────────
 var currentDetailIdx=-1;
@@ -486,27 +638,31 @@ function renderList(){
   conditions.forEach(function(c,i){
     var col=statusColors[c.status]||statusColors.undiag;
     var pct=c.total>0?Math.round(c.day/c.total*100):0;
-    var dotStyle='width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:3px;'+(
-      c.status==='undiag'?'background:#ccc;border:1.5px dashed #888;':'background:'+col.dot+';');
-    var starsHtml=c.streak>0?'<span style="font-size:10px;color:#BA7517;margin-left:5px">'+stars(c.streak)+'</span>':'';
+    var done=allSlotsDoneToday(c);
+    var due=!done&&isDueToday(c)&&canLogNow(c);
+    var dotStyle='width:9px;height:9px;border-radius:50%;flex-shrink:0;margin-top:4px;background:'+col.dot+';';
+    if(c.status==='undiag')dotStyle='width:9px;height:9px;border-radius:50%;flex-shrink:0;margin-top:4px;background:#1a1a1a;border:1.5px dashed #444;';
     var sub=c.region+' · '+statusLabels[c.status];
-    if(c.action)sub+=' · '+freqLabel(c.times,c.interval);
+    if(c.action)sub+=' · '+freqLabel(c);
     if(c.total>0)sub+=' · T'+c.day+'/'+c.total;
-    var barHtml=(c.action&&c.total>0)?
-      '<div class="bar-row"><div class="btrack"><div class="bfill" style="width:'+pct+'%;background:'+col.bar+'"></div></div></div>':'';
+    var barHtml=(c.action&&c.total>0)?'<div class="bar-row"><div class="btrack"><div class="bfill" style="width:'+pct+'%;background:'+col.bar+'"></div></div></div>':'';
     var item=document.createElement('div');
-    item.className='cond-item';
+    item.className='cond-item'+(done?' done-today':'');
     item.onclick=(function(idx){return function(){showDetail(idx);};})(i);
+    var dueDot=due?'<div style="width:6px;height:6px;border-radius:50%;background:#cf4444;position:absolute;right:20px;top:16px"></div>':'';
+    var doneBadge=done?'<div class="done-badge">✓</div>':'';
     item.innerHTML='<div style="'+dotStyle+'"></div>'
       +'<div class="cinfo">'
-        +'<div class="cname" style="color:'+col.name+'">'+c.name+starsHtml+'</div>'
+        +'<div class="cname" style="color:'+col.name+'">'+c.name+starsHtml(c.streak,col.dot)+'</div>'
         +'<div class="csub">'+sub+'</div>'
         +barHtml
       +'</div>'
-      +'<div style="font-family:\'Caveat\',cursive;font-size:18px;color:#ccc;padding-left:6px">›</div>';
+      +'<div style="font-size:18px;color:#2a2a2a;padding-left:8px;flex-shrink:0">›</div>'
+      +dueDot+doneBadge;
     list.appendChild(item);
   });
   updateBodyColors();
+  renderTodayBanner();
 }
 
 // ── Detail sheet ─────────────────────────────────────────────────
@@ -518,72 +674,81 @@ function showDetail(i){
   document.getElementById('dsName').textContent=c.name;
   document.getElementById('dsName').style.color=col.name;
   document.getElementById('dsFeedback').textContent='';
-
-  var meta='Status: <strong style="color:'+col.name+'">'+statusLabels[c.status]+'</strong>';
-  if(c.action)meta+='<br>Aktion: '+c.action;
-  if(c.times&&c.times.length)meta+='<br>Frequenz: '+freqLabel(c.times,c.interval);
-  if(c.total>0)meta+='<br>Fortschritt: Tag '+c.day+' von '+c.total;
-  else if(c.action)meta+='<br>Behandlung: dauerhaft';
-  if(c.streak>0)meta+='<br>Streak: <span style="color:#BA7517">'+stars(c.streak)+'</span> ('+c.streak+' Tag'+(c.streak>1?'e':'')+')';
-  document.getElementById('dsMeta').innerHTML=meta;
+  refreshDetailMeta(c);
 
   var hasTreatment=!!needsTreatment[c.status];
   var isUndiag=c.status==='undiag';
   var acts='';
-  if(hasTreatment)acts+='<button class="dact primary" onclick="logToday()">✓ Heute erledigt</button><button class="dact danger" onclick="logSkip()">✗ Heute ausgelassen</button>';
-  if(isUndiag)acts+='<button class="dact primary" onclick="diagnoseThis()">Jetzt diagnostizieren</button>';
-  acts+='<button class="dact" onclick="editDiagnosis()">Diagnose ändern</button>';
-  acts+='<button class="dact green" onclick="markHealed()">✓ Geheilt – löschen</button>';
-  acts+='<button class="dact" onclick="closeAll()">Schliessen</button>';
-  document.getElementById('dsActions').innerHTML=acts;
 
+  if(hasTreatment&&isDueToday(c)){
+    var allDone=allSlotsDoneToday(c);
+    var canLog=canLogNow(c);
+    var count=logsTodayCount(c);
+    var needed=c.timesPerDay||1;
+    var btnLabel;
+    if(allDone) btnLabel='✓ Heute fertig';
+    else if(canLog) btnLabel='Erledigt ('+count+'/'+needed+')';
+    else btnLabel='Warten ('+Math.ceil(hoursUntilNext(c))+'h)';
+    acts+='<button id="erledigt-btn" class="dact primary"'+(!canLog||allDone?' disabled':'')+' onclick="logToday()">'+btnLabel+'</button>';
+  } else if(hasTreatment&&!isDueToday(c)){
+    acts+='<button class="dact" disabled>Nächster Behandlungstag in '+c.interval+'+ Tagen</button>';
+  }
+
+  if(isUndiag) acts+='<button class="dact primary" onclick="diagnoseThis()">Jetzt diagnostizieren</button>';
+  acts+='<button class="dact secondary-action" onclick="editDiagnosis()">Bearbeiten</button>';
+  acts+='<button class="dact green" onclick="markHealed()">✓ Geheilt – entfernen</button>';
+  acts+='<button class="dact secondary-action" onclick="closeAll()">Schliessen</button>';
+  document.getElementById('dsActions').innerHTML=acts;
   openSheet('detailSheet');
-  if(currentTab==='body')switchTab('list');
+}
+
+function refreshDetailMeta(c){
+  var col=statusColors[c.status]||statusColors.undiag;
+  var meta='<strong>Status:</strong> <span style="color:'+col.name+'">'+statusLabels[c.status]+'</span>';
+  if(c.action) meta+='<br><strong>Übung:</strong> '+c.action;
+  if(needsTreatment[c.status]){
+    meta+='<br><strong>Frequenz:</strong> '+freqLabel(c);
+    var count=logsTodayCount(c);
+    var needed=c.timesPerDay||1;
+    meta+='<br><strong>Heute:</strong> <span style="color:'+(count>=needed?'#2a9d2a':'#555')+'">'+count+' / '+needed+'</span>';
+  }
+  if(c.total>0) meta+='<br><strong>Fortschritt:</strong> Tag '+c.day+' / '+c.total+' ('+Math.round(c.day/c.total*100)+'%)';
+  else if(c.action&&needsTreatment[c.status]) meta+='<br><strong>Behandlung:</strong> dauerhaft';
+  if(c.streak>0) meta+='<br><strong>Streak:</strong> <span style="color:'+col.dot+'">'+Array(Math.min(c.streak,10)+1).join('★')+'</span> '+c.streak+' Tag'+(c.streak>1?'e':'');
+  document.getElementById('dsMeta').innerHTML=meta;
+  document.getElementById('dsName').style.color=col.name;
 }
 
 // ── Log actions ──────────────────────────────────────────────────
 function logToday(){
   if(currentDetailIdx<0)return;
   var c=conditions[currentDetailIdx];
-  c.day=Math.min(c.day+1,c.total||999);
+  if(isDoneToday(c)){
+    document.getElementById('dsFeedback').textContent='Heute bereits erledigt.';
+    document.getElementById('dsFeedback').style.color='#555';
+    return;
+  }
+  c.day=Math.min(c.day+1,c.total||9999);
   if(c.status==='red'||c.status==='blue')c.status='amber';
   c.streak=Math.min((c.streak||0)+1,10);
-  c.lastLogged=todayStr();
+  c.lastActed=todayStr();
   saveConditions();renderList();
-  document.getElementById('dsFeedback').textContent='Heute erledigt ✓';
-  document.getElementById('dsFeedback').style.color='#3b6d11';
-  // refresh meta
-  var col=statusColors[c.status]||statusColors.undiag;
-  document.getElementById('dsName').style.color=col.name;
-  var meta='Status: <strong style="color:'+col.name+'">'+statusLabels[c.status]+'</strong>';
-  if(c.action)meta+='<br>Aktion: '+c.action;
-  if(c.total>0)meta+='<br>Fortschritt: Tag '+c.day+' von '+c.total;
-  if(c.streak>0)meta+='<br>Streak: <span style="color:#BA7517">'+stars(c.streak)+'</span> ('+c.streak+' Tag'+(c.streak>1?'e':'')+')';
-  document.getElementById('dsMeta').innerHTML=meta;
+  document.getElementById('dsFeedback').textContent='Heute erledigt ✓  Streak: '+c.streak;
+  document.getElementById('dsFeedback').style.color='#2a9d2a';
+  refreshDetailMeta(c);
+  // Disable the button now
+  var btn=document.querySelector('#dsActions .dact.primary');
+  if(btn){btn.disabled=true;btn.textContent='✓ Heute erledigt';}
+  var skipBtn=document.querySelector('#dsActions .dact.danger');
+  if(skipBtn)skipBtn.style.display='none';
 }
-function logSkip(){
-  if(currentDetailIdx<0)return;
-  var c=conditions[currentDetailIdx];
-  if(c.status==='amber')c.status='red';
-  c.streak=0;
-  c.day=Math.max(0,(c.day||0)-1);
-  saveConditions();renderList();
-  document.getElementById('dsFeedback').textContent='Ausgelassen · Fortschritt –1';
-  document.getElementById('dsFeedback').style.color='#A32D2D';
-  var col=statusColors[c.status]||statusColors.undiag;
-  document.getElementById('dsName').style.color=col.name;
-  var meta='Status: <strong style="color:'+col.name+'">'+statusLabels[c.status]+'</strong>';
-  if(c.action)meta+='<br>Aktion: '+c.action;
-  if(c.total>0)meta+='<br>Fortschritt: Tag '+c.day+' von '+c.total;
-  document.getElementById('dsMeta').innerHTML=meta;
-}
+
 function markHealed(){
   if(currentDetailIdx<0)return;
   var idx=currentDetailIdx;
-  showConfirm('Diagnose "'+conditions[idx].name+'" als geheilt markieren und löschen?','Löschen',function(){
-    conditions.splice(idx,1);
-    currentDetailIdx=-1;
-    saveConditions();renderList();closeAll();
+  showConfirm('"'+conditions[idx].name+'" als geheilt markieren und entfernen?','Entfernen',function(){
+    conditions.splice(idx,1);currentDetailIdx=-1;
+    saveConditions();renderList();updateBodyColors();renderTodayBanner();closeAll();
   });
 }
 
@@ -591,21 +756,20 @@ function markHealed(){
 function tapRegion(name){
   document.getElementById('tsTitle').textContent=name;
   document.getElementById('fRegion').value=name;
-  var matches=[];
-  conditions.forEach(function(c,i){if(c.region===name)matches.push({c:c,i:i});});
+  var matches=[];conditions.forEach(function(c,i){if(c.region===name)matches.push({c:c,i:i});});
   var body=document.getElementById('tsBody');
   if(matches.length===0){
-    body.innerHTML='<div style="font-family:\'Caveat\',cursive;font-size:14px;color:#aaa;padding:6px 0">Keine Diagnose erfasst.</div>';
+    body.innerHTML='<div style="font-size:13px;color:#333;padding:8px 0">Keine Diagnose für diese Region.</div>';
   } else {
     body.innerHTML='';
     matches.forEach(function(m){
       var col=statusColors[m.c.status]||statusColors.undiag;
       var row=document.createElement('div');
       row.className='tp-entry';
-      row.innerHTML='<div style="width:10px;height:10px;border-radius:50%;background:'+col.dot+';flex-shrink:0"></div>'
-        +'<div style="flex:1"><div style="font-family:\'Special Elite\',monospace;font-size:14px;color:'+col.name+'">'+m.c.name+'</div>'
-        +'<div style="font-family:\'Caveat\',cursive;font-size:12px;color:#aaa">'+statusLabels[m.c.status]+'</div></div>'
-        +'<div class="tp-arrow">›</div>';
+      row.innerHTML='<div style="width:9px;height:9px;border-radius:50%;background:'+col.dot+';flex-shrink:0"></div>'
+        +'<div style="flex:1"><div style="font-size:14px;font-weight:500;color:'+col.name+'">'+m.c.name+'</div>'
+        +'<div style="font-size:12px;color:#444;margin-top:2px">'+statusLabels[m.c.status]+'</div></div>'
+        +'<div style="font-size:18px;color:#333">›</div>';
       row.onclick=(function(idx){return function(){showDetail(idx);};})(m.i);
       body.appendChild(row);
     });
@@ -613,15 +777,14 @@ function tapRegion(name){
   openSheet('tapSheet');
 }
 
-// ── Add/Edit form ────────────────────────────────────────────────
+// ── Form ─────────────────────────────────────────────────────────
 function onStatusChange(){
   var st=document.getElementById('fStatus').value;
   var needs=!!needsTreatment[st];
-  document.getElementById('fActionRow').style.display=needs?'block':'none';
-  document.getElementById('fDaysRow').style.display=needs?'block':'none';
-  document.getElementById('fFreqRow').style.display=needs?'block':'none';
+  ['fActionRow','fDaysRow','fFreqRow'].forEach(function(id){
+    document.getElementById(id).style.display=needs?'block':'none';
+  });
 }
-
 function _openForm(opts){
   document.getElementById('addSheetTitle').textContent=opts.title||'Neue Diagnose';
   document.getElementById('addSubmitBtn').textContent=opts.btnLabel||'Eintragen';
@@ -632,54 +795,49 @@ function _openForm(opts){
   document.getElementById('fStatus').value=opts.status||'red';
   document.getElementById('fAction').value=opts.action||'';
   document.getElementById('fDays').value=opts.days||30;
+  document.getElementById('fTimesPerDay').value=opts.timesPerDay||1;
   document.getElementById('fInterval').value=opts.interval||1;
-  var sel=opts.times&&opts.times.length?opts.times:['morgens'];
-  document.querySelectorAll('#addSheet .freq-chip').forEach(function(ch){
-    ch.classList.toggle('selected',sel.indexOf(ch.dataset.val)>=0);
-  });
   onStatusChange();
   openSheet('addSheet');
 }
 function showAdd(){
-  var preRegion=document.getElementById('tsTitle').textContent||'';
-  // only use it if tapSheet was actually open
-  if(activeSheet!=='tapSheet')preRegion='';
+  var preRegion=(activeSheet==='tapSheet')?document.getElementById('tsTitle').textContent:'';
   _openForm({region:preRegion});
 }
 function editDiagnosis(){
   if(currentDetailIdx<0)return;
   var c=conditions[currentDetailIdx];
-  _openForm({title:'Diagnose ändern',btnLabel:'Speichern',replacing:currentDetailIdx,
+  _openForm({title:'Bearbeiten',btnLabel:'Speichern',replacing:currentDetailIdx,
     name:c.name,region:c.region,status:c.status,action:c.action||'',
-    days:c.total||30,interval:c.interval||1,times:c.times||['morgens']});
+    days:c.total||30,timesPerDay:c.timesPerDay||1,interval:c.interval||1});
 }
 function diagnoseThis(){
   if(currentDetailIdx<0)return;
   var c=conditions[currentDetailIdx];
   _openForm({title:'Diagnose stellen',btnLabel:'Speichern',replacing:currentDetailIdx,
-    name:c.name,region:c.region,status:'red',days:30,interval:1,times:['morgens']});
+    name:c.name,region:c.region,status:'red',days:30,timesPerDay:1,interval:1});
 }
 function submitNew(){
   var region=document.getElementById('fRegion').value;
   var name=document.getElementById('fName').value.trim();
   var status=document.getElementById('fStatus').value;
   var fb=document.getElementById('addFeedback');
-  if(!region||!name){fb.textContent='Bitte Region und Name angeben.';fb.style.color='#A32D2D';return;}
+  if(!region||!name){fb.textContent='Region und Name sind Pflichtfelder.';return;}
   var needs=!!needsTreatment[status];
-  var action='',times=[],interval=1,days=0;
+  var action='',timesPerDay=1,interval=1,days=0;
   if(needs){
     action=document.getElementById('fAction').value.trim();
-    if(!action){fb.textContent='Bitte Aktion/Übung angeben.';fb.style.color='#A32D2D';return;}
-    times=getSelectedTimes();
+    if(!action){fb.textContent='Bitte Übung/Aktion angeben.';return;}
+    timesPerDay=parseInt(document.getElementById('fTimesPerDay').value)||1;
     interval=parseInt(document.getElementById('fInterval').value)||1;
     days=parseInt(document.getElementById('fDays').value)||30;
   }
   var replacing=document.getElementById('addSheet').dataset.replacing;
   var replacingIdx=parseInt(replacing);
-  var isEdit=replacing!==undefined&&replacing!==''&&!isNaN(replacingIdx);
-  var oldDay=isEdit?conditions[replacingIdx].day:0;
-  var oldStreak=isEdit?conditions[replacingIdx].streak:0;
-  var newEntry={name:name,region:region,action:action,times:times,interval:interval,day:oldDay,total:days,status:status,streak:oldStreak};
+  var isEdit=replacing!==''&&!isNaN(replacingIdx);
+  var old=isEdit?conditions[replacingIdx]:{};
+  var newEntry={name:name,region:region,action:action,timesPerDay:timesPerDay,interval:interval,
+    day:old.day||0,total:days,status:status,streak:old.streak||0,logsToday:old.logsToday||{},lastStreakDay:old.lastStreakDay||''};
   if(isEdit)conditions[replacingIdx]=newEntry;
   else conditions.push(newEntry);
   saveConditions();renderList();closeAll();
@@ -691,7 +849,7 @@ var regionToSvgIds={
   'Kopf':['fKopf'],'Nacken':['fNacken','bNacken'],
   'Rechte Schulter':['fSchulterR'],'Linke Schulter':['fSchulterL'],
   'Rechter Oberarm':['fOberarmR'],'Linker Oberarm':['fOberarmL'],
-  'Brustkorb':['fBrust'],'Bauch':['fBauch'],'Hüfte':['fHüfte'],
+  'Brustkorb':['fBrust'],'Bauch':['fBauch'],'Hüfte':['fHuefte'],
   'Rechter Ellbogen':['fEllbogenR'],'Linker Ellbogen':['fEllbogenL'],
   'Rechter Unterarm':['fUnterarmR'],'Linker Unterarm':['fUnterarmL'],
   'Rechte Hand':['fHandR'],'Linke Hand':['fHandL'],
@@ -719,14 +877,18 @@ function updateBodyColors(){
   Object.values(regionToSvgIds).forEach(function(ids){ids.forEach(function(id){
     var el=document.getElementById(id);if(!el)return;
     var sh=el.querySelector('ellipse,rect,circle');if(!sh)return;
-    sh.setAttribute('fill',statusFills.none.fill);sh.setAttribute('stroke',statusFills.none.stroke);sh.setAttribute('stroke-width',statusFills.none.sw);
+    sh.setAttribute('fill',statusFills.none.fill);
+    sh.setAttribute('stroke',statusFills.none.stroke);
+    sh.setAttribute('stroke-width',statusFills.none.sw);
   });});
   Object.keys(regionStatus).forEach(function(region){
     var sf=statusFills[regionStatus[region]],ids=regionToSvgIds[region];if(!ids||!sf)return;
     ids.forEach(function(id){
       var el=document.getElementById(id);if(!el)return;
       var sh=el.querySelector('ellipse,rect,circle');if(!sh)return;
-      sh.setAttribute('fill',sf.fill);sh.setAttribute('stroke',sf.stroke);sh.setAttribute('stroke-width',sf.sw);
+      sh.setAttribute('fill',sf.fill);
+      sh.setAttribute('stroke',sf.stroke);
+      sh.setAttribute('stroke-width',sf.sw);
     });
   });
 }
